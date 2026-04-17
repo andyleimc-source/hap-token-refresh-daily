@@ -29,29 +29,22 @@ git clone https://github.com/andyleimc-source/hap-token-refresh-daily.git
 cd hap-token-refresh-daily
 ```
 
-### 2. Configure Claude Code
+### 2. Register the MCP server with Claude Code
 
-Add the following to your `~/.claude/settings.json`:
+Run the following command (user scope, available in all projects):
 
-```json
-{
-  "mcpServers": {
-    "mingdao": {
-      "command": "node",
-      "args": [
-        "/path/to/hap-token-refresh-daily/index.js",
-        "YOUR_ACCOUNT_ID",
-        "YOUR_KEY"
-      ]
-    }
-  }
-}
+```bash
+claude mcp add -s user mingdao node /path/to/hap-token-refresh-daily/index.js YOUR_ACCOUNT_ID YOUR_KEY
 ```
 
 Replace:
 - `/path/to/hap-token-refresh-daily/index.js` → full path to the cloned repo
 - `YOUR_ACCOUNT_ID` → your MingDao account ID
 - `YOUR_KEY` → your personal key issued by the admin
+
+> The command writes the server config to `~/.claude.json`. MCP servers do **not** go in `~/.claude/settings.json` — that file's schema does not accept an `mcpServers` field.
+
+To verify, run `claude mcp list` and confirm `mingdao` appears.
 
 ### 3. Restart Claude Code
 
